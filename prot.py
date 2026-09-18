@@ -1,5 +1,5 @@
-s = input()
-
+with open('rosalind-datasets/rosalind_prot.txt', "r") as file:
+    s = file.read().strip()
 codon_table = {
     'UUU':'F', 'UUC':'F', 'UUA':'L', 'UUG':'L',
     'CUU':'L', 'CUC':'L', 'CUA':'L', 'CUG':'L',
