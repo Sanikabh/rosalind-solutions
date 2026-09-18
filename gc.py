@@ -13,11 +13,11 @@ while True:
     else:
         sequence[current_id] += line
 
-print(sequence)
+#print(sequence)
 
-#count_GC = 0
-#for base in dna:
- #   if base == "G" or base == "C":
-  #      count_GC += 1
+count_GC = 0
+for base in sequence:
+    if base == "G" or base == "C":
+        count_GC += 1
 
-#print((count_GC/len(dna)) * 100)
+print((count_GC/len(sequence)) * 100)
