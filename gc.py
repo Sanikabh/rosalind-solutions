@@ -14,10 +14,19 @@ while True:
         sequence[current_id] += line
 
 #print(sequence)
+best_id = ""
+best_gc = 0
 
-count_GC = 0
-for base in sequence:
-    if base == "G" or base == "C":
-        count_GC += 1
+for seq_id, seq in sequence.items():
+    count_GC = 0
+    for base in seq:
+        if base == "G" or base == "C":
+            count_GC += 1
+    gc_content = (count_GC/len(seq)) * 100
+    #print(gc_content)
 
-print((count_GC/len(sequence)) * 100)
+    if gc_content > best_gc:
+        best_gc = gc_content
+        best_id = seq_id
+
+print(best_id, best_gc)
