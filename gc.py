@@ -1,9 +1,23 @@
-dna = input()
+sequence = {}
+current_id = ""
 
-count_GC = 0
+while True:
+    try:
+        line = input()
+    except EOFError:
+        break
+    line = line.strip()
+    if line.startswith(">"):
+        current_id = line[1:]
+        sequence[current_id] = ""
+    else:
+        sequence[current_id] += line
 
-for base in dna:
-    if base == "G" or base == "C":
-        count_GC += 1
+print(sequence)
 
-print((count_GC/len(dna)) * 100)
+#count_GC = 0
+#for base in dna:
+ #   if base == "G" or base == "C":
+  #      count_GC += 1
+
+#print((count_GC/len(dna)) * 100)
