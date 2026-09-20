@@ -29,12 +29,19 @@ codon_table = {
     'GGT':'G', 'GGC':'G', 'GGA':'G', 'GGG':'G',
 }
 
-protein = []
-for i in range(0, len(sequence[current_id]), 3):
-    codon = sequence[current_id][i:i+3]
-    aa = codon_table[codon]
-    if aa == "Stop":
-        break
-    protein.append(aa)
+seq = sequence[current_id]
+proteins = set()
 
-print("".join(protein))
+for i in range(0, len(seq), 3):
+    codon = seq[i:i+3]
+    aa = codon_table[codon]
+    if aa == "M":
+        protein = ""
+        for j in range(i, len(seq), 3):
+            inner_codon = seq[j:j+3]
+            inner_aa = codon_table[inner_codon]
+            if inner_aa == "Stop":
+                proteins.add(protein)
+                break
+            protein += inner_aa
+print("".join(proteins))
