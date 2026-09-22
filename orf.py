@@ -1,7 +1,8 @@
 sequence = {}
 current_id = ""
 
-with open("rosalind-datasets/orf.txt", "r") as file:
+# Reading FASTA file format
+with open("rosalind-datasets/rosalind_orf.txt", "r") as file:
     for line in file:
         line = line.strip()
         if line.startswith(">"):
@@ -29,19 +30,35 @@ codon_table = {
     'GGT':'G', 'GGC':'G', 'GGA':'G', 'GGG':'G',
 }
 
-seq = sequence[current_id]
-proteins = set()
+seq = sequence[current_id] # store sequences in a separate variable
 
-for i in range(0, len(seq), 3):
-    codon = seq[i:i+3]
-    aa = codon_table[codon]
-    if aa == "M":
-        protein = ""
-        for j in range(i, len(seq), 3):
-            inner_codon = seq[j:j+3]
-            inner_aa = codon_table[inner_codon]
-            if inner_aa == "Stop":
-                proteins.add(protein)
-                break
-            protein += inner_aa
-print("".join(proteins))
+# Reverse complement
+complement = {'A': 'T', 'T': 'A', 'G': 'C', 'C': 'G'}
+rev_comp = ""
+for base in seq[::-1]:
+    rev_comp += complement[base]
+
+# define reading frame: scan one strand for every ORF
+def find_proteins(s):
+    found = set()
+    for i in range(len(s) - 2):
+        codon = s[i:i+3]
+        if codon_table.get(codon) == "M":
+            protein = ""
+            for j in range(i, len(s), 3):
+                c = s[j:j+3]
+                aa = codon_table.get(c)
+                if aa is None: # ran off the end, incomplete codon left over
+                    break
+                if aa == "Stop":
+                    found.add(protein)
+                    break
+                protein += aa
+    return found
+
+proteins = set()
+proteins |= find_proteins(seq) # 3 forward frames
+proteins |= find_proteins(rev_comp) # 3 reverse complement frames
+
+for p in proteins:
+    print(p)
