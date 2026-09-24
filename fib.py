@@ -1,5 +1,8 @@
 # Rabbits and recurrence relations
-n, k = map(int, input().split())
+with open("rosalind-datasets/rosalind_fib.txt", "r") as file:
+    line = file.readline()
+
+n, k = map(int, line.strip().split())
 
 # track the two most recent months
 two_months_ago = 1  # month 1
