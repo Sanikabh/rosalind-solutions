@@ -1,5 +1,6 @@
 # Calculating protein mass
-p = str(input())
+with open("rosalind-datasets/rosalind_prtm.txt", "r") as file:
+    p = file.read().strip()
 
 monoisotopic_mass_table = {
     'A': 71.03711,
