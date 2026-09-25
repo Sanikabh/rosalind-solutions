@@ -20,3 +20,10 @@ while True:
 main_seq = sequence[first_id]
 #print(main_seq)
 
+for key in sequence:
+    if key == first_id:
+        continue
+    intron = sequence[key]
+    main_seq = main_seq.replace(intron, "")
+
+#print(main_seq)
